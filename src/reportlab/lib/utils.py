@@ -14,7 +14,7 @@ except ImportError:
 from reportlab import isPy3
 from reportlab.lib.logger import warnOnce
 from reportlab.lib.rltempfile import get_rl_tempfile, get_rl_tempdir, _rl_getuid
-from . rl_safe_eval import rl_safe_exec, rl_safe_eval, safer_globals
+from . rl_safe_eval import rl_safe_exec, rl_safe_eval, safer_globals, rl_extended_literal_eval
 
 class __UNSET__(object):
     @staticmethod
