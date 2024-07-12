@@ -14,6 +14,9 @@ haveNameConstant = hasattr(ast,'NameConstant')
 haveMatMult = haveMultiStarred = hasattr(ast,'MatMult')
 import textwrap
 
+# import a replacement for MappingProxyType
+from dictproxyhack import dictproxy
+
 class BadCode(ValueError):
 	pass
 
@@ -1352,8 +1355,8 @@ def rl_extended_literal_eval(expr, safe_callables=None, safe_names=None):
 	safe_names = safe_names.copy()
 	safe_names.update({'None': None, 'True': True, 'False': False})
 	#make these readonly with MappingProxyType
-	safe_names = types.MappingProxyType(safe_names)
-	safe_callables = types.MappingProxyType(safe_callables)
+	safe_names = dictproxy(safe_names)
+	safe_callables = dictproxy(safe_callables)
 	if isinstance(expr, str):
 		expr = ast.parse(expr, mode='eval')
 	if isinstance(expr, ast.Expression):
