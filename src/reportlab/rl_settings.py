@@ -69,7 +69,6 @@ encryptionStrength
 trustedHosts
 trustedSchemes
 renderPMBackend
-textPaths
 toColorCanUse'''.split())
 
 allowTableBoundsErrors =    1 # set to 0 to die on too large elements in tables in debug (recommend 1 for production use)
