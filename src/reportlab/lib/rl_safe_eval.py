@@ -1371,7 +1371,10 @@ def rl_extended_literal_eval(expr, safe_callables=None, safe_names=None):
 		safe_test = lambda n: isinstance(n, ast.Name) and n.id in safe_names
 		safe_extract = lambda n: safe_names[n.id]
 	def _convert(node):
-		if isinstance(node, (ast.Str, ast.Bytes)):
+        # In Python2, the ast.Bytes object doesn't exist, and there isn't a "Unicode" one either
+        # So, we will assume ast.Str is good enough
+		# if isinstance(node, (ast.Str, ast.Bytes)):
+		if isinstance(node, ast.Str):
 			return node.s
 		elif isinstance(node, ast.Num):
 			return node.n
