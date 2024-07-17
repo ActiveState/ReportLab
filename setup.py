@@ -582,20 +582,20 @@ def main():
             infoline('# You may need to edit setup.cfg (win32)')
             infoline('# or edit this file to access the library if it is installed')
 
-        if platform=='win32':
-            PNG_LIB = [os.environ.get("PNG_LIB", '')]
-            PNG_INC_DIR=[]
-            PNG_LIB_DIR=[]
-            if PNG_LIB:
-                PNG_INC_DIR.append(os.environ.get("PNG_INC_DIR", ''))
-                PNG_LIB_DIR.append(os.environ.get("PNG_LIB_DIR", ''))
-        else:
-            PNG_LIB = [os.environ.get("PNG_LIB", '')]
-            PNG_INC_DIR=[]
-            PNG_LIB_DIR=[]
-            if PNG_LIB:
-                PNG_INC_DIR.append(os.environ.get("PNG_INC_DIR", ''))
-                PNG_LIB_DIR.append(os.environ.get("PNG_LIB_DIR", ''))
+        PNG_LIB = os.environ.get("PNG_LIB", '')
+        PNG_INC_DIR=os.environ.get("PNG_INC_DIR", '')
+        PNG_LIB_DIR=os.environ.get("PNG_LIB_DIR", '')
+
+        if not PNG_LIB or not PNG_INC_DIR or not PNG_LIB_DIR:
+            infoline('# PNG_LIB, PNG_INC_DIR and PNG_LIB_DIR need to be set in the environment')
+            infoline('# for the build to work.')
+            exit(-1)
+
+        # Turn the variables into lists for downstream
+        PNG_LIB = [ PNG_LIB ]
+        PNG_INC_DIR = [ PNG_INC_DIR ]
+        PNG_LIB_DIR = [ PNG_LIB_DIR ]
+
 
         OTHER_LIBS = ['z', 'bz2']
 
