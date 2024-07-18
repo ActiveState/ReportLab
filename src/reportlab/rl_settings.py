@@ -68,7 +68,8 @@ documentLang
 encryptionStrength
 trustedHosts
 trustedSchemes
-renderPMBackend'''.split())
+renderPMBackend
+toColorCanUse'''.split())
 
 allowTableBoundsErrors =    1 # set to 0 to die on too large elements in tables in debug (recommend 1 for production use)
 shapeChecking =             1
@@ -163,6 +164,7 @@ trustedHosts=None                                   #set to a list of trusted fo
 trustedSchemes=['file', 'rml', 'data', 'https',     #these url schemes are trusted
                 'http', 'ftp']
 renderPMBackend='_renderPM'                         #or 'rlPyCairo' if available
+toColorCanUse='rl_extended_literal_eval'            #change to None or 'rl_safe_eval' depending on trust
 
 # places to look for T1Font information
 T1SearchPath =  (

@@ -1,6 +1,6 @@
 #Copyright ReportLab Europe Ltd. 2000-2017
 #see license.txt for license details
-__version__='3.5.62'
+__version__='3.5.68'
 import os, sys, glob, shutil, re
 def specialOption(n):
     v = False
@@ -582,14 +582,31 @@ def main():
             infoline('# You may need to edit setup.cfg (win32)')
             infoline('# or edit this file to access the library if it is installed')
 
+        PNG_LIB = os.environ.get("PNG_LIB", '')
+        PNG_INC_DIR=os.environ.get("PNG_INC_DIR", '')
+        PNG_LIB_DIR=os.environ.get("PNG_LIB_DIR", '')
+
+        if not PNG_LIB or not PNG_INC_DIR or not PNG_LIB_DIR:
+            infoline('# PNG_LIB, PNG_INC_DIR and PNG_LIB_DIR need to be set in the environment')
+            infoline('# for the build to work.')
+            exit(-1)
+
+        # Turn the variables into lists for downstream
+        PNG_LIB = [ PNG_LIB ]
+        PNG_INC_DIR = [ PNG_INC_DIR ]
+        PNG_LIB_DIR = [ PNG_LIB_DIR ]
+
+
+        OTHER_LIBS = ['z', 'bz2']
+
         EXT_MODULES +=  [Extension( 'reportlab.graphics._renderPM',
                                         SOURCES,
-                                        include_dirs=[RENDERPM,LIBART_INC,GT1_DIR]+FT_INC_DIR,
+                                        include_dirs=[RENDERPM,LIBART_INC,GT1_DIR]+FT_INC_DIR+PNG_INC_DIR,
                                         define_macros=FT_MACROS+[('LIBART_COMPILATION',None)]+debug_macros+[('LIBART_VERSION',LIBART_VERSION)],
-                                        library_dirs=[]+FT_LIB_DIR,
+                                        library_dirs=[]+FT_LIB_DIR+PNG_LIB_DIR,
 
                                         # libraries to link against
-                                        libraries=FT_LIB+LIBART_LIB,
+                                        libraries=FT_LIB+LIBART_LIB+PNG_LIB+OTHER_LIBS,
                                         extra_compile_args=debug_compile_args,
                                         extra_link_args=debug_link_args,
                                         ),
@@ -646,7 +663,7 @@ def main():
             
             #this probably only works for setuptools, but distutils seems to ignore it
             install_requires=['pillow>=4.0.0'],
-            python_requires='>=2.7, >=3.6, <4',
+            python_requires='>=2.7, <4',
             extras_require={
                 'RLPYCAIRO': ['rlPyCairo>=0.0.5'],
                 },

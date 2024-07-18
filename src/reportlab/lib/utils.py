@@ -14,7 +14,10 @@ except ImportError:
 from reportlab import isPy3
 from reportlab.lib.logger import warnOnce
 from reportlab.lib.rltempfile import get_rl_tempfile, get_rl_tempdir, _rl_getuid
-from . rl_safe_eval import rl_safe_exec, rl_safe_eval, safer_globals
+from . rl_safe_eval import rl_safe_exec, rl_safe_eval, safer_globals, rl_extended_literal_eval
+
+# Import a replacement for MappingProxyType for Python2
+from dictproxyhack import dictproxy
 
 class __UNSET__(object):
     @staticmethod
@@ -116,7 +119,7 @@ if isPy3:
     def isNonPrimitiveInstance(x):
         return not isinstance(x,(float,int,type,tuple,list,dict,str,bytes,complex,bool,slice,_rl_NoneType,
             types.FunctionType,types.LambdaType,types.CodeType,
-            types.MappingProxyType,types.SimpleNamespace,
+            types.dictproxy,types.SimpleNamespace,
             types.GeneratorType,types.MethodType,types.BuiltinFunctionType,
             types.BuiltinMethodType,types.ModuleType,types.TracebackType,
             types.FrameType,types.GetSetDescriptorType,types.MemberDescriptorType))
