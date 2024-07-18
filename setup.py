@@ -596,8 +596,11 @@ def main():
         PNG_INC_DIR = [ PNG_INC_DIR ]
         PNG_LIB_DIR = [ PNG_LIB_DIR ]
 
+        Z_LIB = 'z'
+        if sys.platform == 'win32':
+            Z_LIB = 'zlib'
 
-        OTHER_LIBS = ['z', 'bz2']
+        OTHER_LIBS = [Z_LIB, 'bz2']
 
         EXT_MODULES +=  [Extension( 'reportlab.graphics._renderPM',
                                         SOURCES,
